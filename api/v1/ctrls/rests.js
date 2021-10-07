@@ -5,14 +5,14 @@ const restRouter = Router();
 restRouter.get('/', (req, res) => {     // Get all resturants 
     restHandler.getAllRests((err, result) => {
         if (err) throw err;
-        res.json(result);
+            res.json(result);
     });
 });
 
 restRouter.get('/:id', (req, res) => {  // Get resturant by id
-    restHandler.getRest(req.query.restid, (err, result) => {
+    restHandler.getRest(req.params.id, (err, result) => {
         if (err) throw err;
-        res.json(result);
+                res.json(result);
     });
 });
 
@@ -21,25 +21,25 @@ restRouter.post('/', (req, res) => {    // Add resturant
     restHandler.addRest(name, image, chefid, dishesid,
         (err, result) => {
             if (err) throw err;
-            res.json(result);
+                res.json(result);
         });
 });
 
 restRouter.put('/:id', (req, res) => {  // Edit resturant by id
-    const { id, name, image, chefid, dishesid } = req.body;
-    restHandler.setRest(id, name, image, chefid, dishesid,
+    const { name, image, chefid, dishesid } = req.body;
+    restHandler.setRest(req.params.id, name, image, chefid, dishesid,
         (err, result) => {
             if (err) throw err;
-            res.json(result);
+                res.json(result);
         });
 });
 
 restRouter.delete('/:id', (req, res) => { // Delete resturant by id
-    const { id, name } = req.body;
-    restHandler.deleteRest(id, name,
+    const { name } = req.body;
+    restHandler.deleteRest(req.params.id, name,
         (err, result) => {
             if (err) throw err;
-            res.json(result);
+                res.json(result);
         });
 });
 

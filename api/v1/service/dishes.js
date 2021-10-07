@@ -1,19 +1,23 @@
 const dishHandler = {};
-//const chefs = require('../service/rests.js');
 
-dishHandler.getAllDishes = () => {     // Get all dishes 
+dishHandler.getAllDishes = (cb) => {     // Get all dishes 
+    cb(null, "get all dishes")
 };
 
-dishHandler.getDish = () => {  // Get dish by id
+dishHandler.getDish = (id, cb) => {  // Get dish by id
+    cb(null, id);
 };
 
-dishHandler.addDish = () => {    // Add dish
+dishHandler.addDish = (name, price, ingre, tags, restid, cb) => {    // Add dish
+    cb(null, {name, price, ingre, tags, restid})
 };
 
-dishHandler.setDish = () => { // Edit dish by id
+dishHandler.setDish = (id, name, price, ingre, tags, restid,cb) => { // Edit dish by id
+    cb(null, {id, name, price, ingre, tags, restid})
 };
 
-dishHandler.deleteDish = () => { // Delete dish by id
+dishHandler.deleteDish = (id, name, cb) => { // Delete dish by id
+    cb(null, {id, name})
 };
 
 export default dishHandler;

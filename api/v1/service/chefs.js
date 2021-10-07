@@ -1,19 +1,23 @@
 const chefHandler = {};
 
-chefHandler.getAllChefs = () => {     // Get all chefs 
-    console.log("get all chefs")
+chefHandler.getAllChefs = (cb) => {     // Get all chefs 
+    cb(null, "get all chefs")
 };
 
-chefHandler.getChef = () => {  // Get chef by id
+chefHandler.getChef = (id, cb) => {  // Get chef by id
+    cb(null, id);
 };
 
-chefHandler.addChef = () => {    // Add chef
+chefHandler.addChef = (name, image, descr, rests, cb) => {    // Add chef
+    cb(null, {name, image, descr, rests})
 };
 
-chefHandler.setChef = () => { // Edit chef by id
+chefHandler.setChef = (id, name, image, descr, rests, cb) => { // Edit chef by id
+    cb(null, {id, name, image, descr, rests})
 };
 
-chefHandler.deleteChef = () => { // Delete chef by id
+chefHandler.deleteChef = (id, name, cb) => { // Delete chef by id
+    cb(null, {id, name})
 };
 
 export default chefHandler;

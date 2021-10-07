@@ -1,18 +1,23 @@
 const restHandler = {};
 
-restHandler.getAllRests = () => {     // Get all resturants 
+restHandler.getAllRests = (cb) => {     // Get all resturants 
+    cb(null, "get all resturants")
 };
 
-restHandler.getRest = () => {  // Get resturant by id
+restHandler.getRest = (id, cb) => {  // Get resturant by id
+    cb(null, id);
 };
 
-restHandler.addRest = () => {    // Add resturant
+restHandler.addRest = (name, image, chefid, dishesid, cb) => {    // Add resturant
+    cb(null, {name, image, chefid, dishesid});
 };
 
-restHandler.setRest = () => { // Edit resturant by id
+restHandler.setRest = (id, name, image, chefid, dishesid, cb) => { // Edit resturant by id
+    cb(null, {id, name, image, chefid, dishesid});
 };
 
-restHandler.deleteRest = () => { // Delete resturant by id
+restHandler.deleteRest = (id, name, cb) => { // Delete resturant by id
+    cb(null, {id, name});
 };
 
 export default restHandler;
