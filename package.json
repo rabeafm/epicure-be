@@ -1,0 +1,29 @@
+{
+  "name": "epicure",
+  "version": "1.0.0",
+  "description": "epicure is a gourmet server presenting chefs, resturants and dishes",
+  "main": "server.js",
+  "type": "module",
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "dotenv": "^10.0.0",
+    "express": "^4.17.1"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.13"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rabeafm/epicure.git"
+  },
+  "author": "rabeafm",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/rabeafm/epicure/issues"
+  },
+  "homepage": "https://github.com/rabeafm/epicure#readme"
+}
