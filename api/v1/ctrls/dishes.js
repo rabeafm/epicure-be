@@ -2,45 +2,39 @@ import { Router } from 'express';
 import dishHandler from '../service/dishes.js'
 const dishRouter = Router();
 
-dishRouter.get('/', (req, res) => {     // Get all dishes 
-    dishHandler.getAllDishes((err, result) => {
-        if (err) throw err;
-            res.json(result);
-    });
+// @desc    Get all dishess
+// @route   GET /api/v1/dishes
+// @access  Public
+dishRouter.get('/', (req, res, next) => { 
+    dishHandler.getAllDishes(res);
 });
 
-dishRouter.get('/:id', (req, res) => {  // Get dish by id
-    dishHandler.getDish(req.params.id, (err, result) => {
-        if (err) throw err;
-            res.json(result);
-    });
+// @desc    Get single dish
+// @route   GET /api/v1/dishes/:id
+// @access  Public
+dishRouter.get('/:id', (req, res, next) => {
+    dishHandler.getDish(req.params.id, res);
 });
 
-dishRouter.post('/', (req, res) => {    // Add dish
-    const { name, price, ingre, tags, restid } = req.body;
-    dishHandler.addDish(name, price, ingre, tags, restid,
-        (err, result) => {
-            if (err) throw err;
-            res.json(result);
-        });
+// @desc    Create new dish
+// @route   POST /api/v1/dishes/
+// @access  Private
+dishRouter.post('/', (req, res, next) => {
+    dishHandler.addDish(req.body, res);
 });
 
-dishRouter.put('/:id', (req, res) => {  // Edit dish by id
-    const { name, price, ingre, tags, restid } = req.body;
-    dishHandler.setDish(req.params.id, name, price, ingre, tags, restid,
-        (err, result) => {
-            if (err) throw err;
-            res.json(result);
-        });
+// @desc    Update dish
+// @route   PUT /api/v1/dishes/:id
+// @access  Private
+dishRouter.put('/:id', (req, res, next) => { 
+    dishHandler.setDish(req.params.id, req.body, res);
 });
 
-dishRouter.delete('/:id', (req, res) => { // Delete dish by id
-    const { name } = req.body;
-    dishHandler.deleteDish(req.params.id, name,
-        (err, result) => {
-            if (err) throw err;
-            res.json(result);
-        });
+// @desc    Delete chef
+// @route   DELETE /api/v1/dishes/:id
+// @access  Private
+dishRouter.delete('/:id', (req, res, next) => {
+    dishHandler.deleteDish(req.params.id, res);
 });
 
 export default dishRouter;

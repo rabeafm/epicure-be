@@ -2,45 +2,40 @@ import { Router } from 'express';
 import chefHandler from '../service/chefs.js'
 const chefRouter = Router();
 
-chefRouter.get('/', (req, res) => {     // Get all chefs 
-     chefHandler.getAllChefs((err, result) => {
-        if (err) throw err;
-            res.json(result);
-    });
+// @desc    Get all chefs
+// @route   GET /api/v1/chefs
+// @access  Public
+chefRouter.get('/', (req, res, next) => { 
+    chefHandler.getAllChefs(res);
 });
 
-chefRouter.get('/:id', (req, res) => {  // Get chef by id
-    chefHandler.getChef(req.params.id, (err, result) => {
-        if (err) throw err;
-            res.json(result);
-    });
+// @desc    Get single chef
+// @route   GET /api/v1/chefs/:id
+// @access  Public
+chefRouter.get('/:id', (req, res, next) => { 
+    chefHandler.getChef(req.params.id, res);
 });
 
-chefRouter.post('/', (req, res) => {    // Add chef
-    const { name, image, descr, rests } = req.body;
-    chefHandler.addChef(name, image, descr, rests,
-        (err, result) => {
-            if (err) throw err;
-                res.json(result);
-        });
+// @desc    Create new chef
+// @route   POST /api/v1/chefs/
+// @access  Private
+chefRouter.post('/', (req, res, next) => {    
+    chefHandler.addChef(req.body, res);
 });
 
-chefRouter.put('/:id', (req, res) => {  // Edit chef by id
-    const { name, image, descr, rests } = req.body;
-    chefHandler.setChef(req.params.id, name, image, descr, rests,
-        (err, result) => {
-            if (err) throw err;
-            res.json(result);
-        });
+// @desc    Update chef
+// @route   PUT /api/v1/chefs/:id
+// @access  Private
+chefRouter.put('/:id', (req, res, next) => {  
+    chefHandler.setChef(req.params.id, req.body, res);
 });
 
-chefRouter.delete('/:id', (req, res) => {  // Delete chef by id
-    const { name } = req.body;
-    chefHandler.deleteChef(req.params.id, name,
-        (err, result) => {
-            if (err) throw err;
-            res.json(result);
-        });
+
+// @desc    Delete chef
+// @route   DELETE /api/v1/chefs/:id
+// @access  Private
+chefRouter.delete('/:id', (req, res, next) => { 
+    chefHandler.deleteChef(req.params.id, res);
 });
 
 export default chefRouter;

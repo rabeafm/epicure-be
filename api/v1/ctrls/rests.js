@@ -2,45 +2,39 @@ import { Router } from 'express';
 import restHandler from '../service/rests.js';
 const restRouter = Router();
 
-restRouter.get('/', (req, res) => {     // Get all resturants 
-    restHandler.getAllRests((err, result) => {
-        if (err) throw err;
-            res.json(result);
-    });
+// @desc    Get all resturants
+// @route   GET /api/v1/rests
+// @access  Public
+restRouter.get('/', (req, res, next) => { 
+    restHandler.getAllRests(res);
 });
 
-restRouter.get('/:id', (req, res) => {  // Get resturant by id
-    restHandler.getRest(req.params.id, (err, result) => {
-        if (err) throw err;
-                res.json(result);
-    });
+// @desc    Get single resturant
+// @route   GET /api/v1/rests/:id
+// @access  Public
+restRouter.get('/:id', (req, res, next) => { 
+    restHandler.getRest(req.params.id, res);
 });
 
-restRouter.post('/', (req, res) => {    // Add resturant
-    const { name, image, chefid, dishesid } = req.body;
-    restHandler.addRest(name, image, chefid, dishesid,
-        (err, result) => {
-            if (err) throw err;
-                res.json(result);
-        });
+// @desc    Create new resturant
+// @route   POST /api/v1/rests/
+// @access  Private
+restRouter.post('/', (req, res, next) => {
+    restHandler.addRest(req.body, res);
 });
 
-restRouter.put('/:id', (req, res) => {  // Edit resturant by id
-    const { name, image, chefid, dishesid } = req.body;
-    restHandler.setRest(req.params.id, name, image, chefid, dishesid,
-        (err, result) => {
-            if (err) throw err;
-                res.json(result);
-        });
+// @desc    Update resturant
+// @route   PUT /api/v1/rests/:id
+// @access  Private
+restRouter.put('/:id', (req, res, next) => { 
+    restHandler.setRest(req.params.id, req.body, res);
 });
 
-restRouter.delete('/:id', (req, res) => { // Delete resturant by id
-    const { name } = req.body;
-    restHandler.deleteRest(req.params.id, name,
-        (err, result) => {
-            if (err) throw err;
-                res.json(result);
-        });
+// @desc    Delete resturant
+// @route   DELETE /api/v1/rests/:id
+// @access  Private
+restRouter.delete('/:id', (req, res, next) => { 
+    restHandler.deleteRest(req.params.id, res);
 });
 
 export default restRouter;
