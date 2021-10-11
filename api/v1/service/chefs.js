@@ -1,27 +1,14 @@
 import Chef from '../../../models/Chef.js'
-const chefHandler = {};
 
-chefHandler.getAllChefs = async () => {     // Get all chefs
-    return await Chef.find();
-};
-
-chefHandler.getChef = async ({ params: {id}}) => {  // Get chef by id
-   return await Chef.findById(id);
-};
-
-chefHandler.addChef = async ({body}) => {    // Add chef
-    return await Chef.create(body)
-};
-
-chefHandler.setChef = async ({ params: {id}, body}) => { // Edit chef by id
-    return await Chef.findByIdAndUpdate(id, body, {
-            new: true,
-            runValidators: true
-        })
-};
-
-chefHandler.deleteChef = async ({ params: {id}}) => { // Delete chef by id
-    return await Chef.findByIdAndDelete(id);
+const chefHandler = {
+    getAll:     async () => await Chef.find(),                                 // Get all chefs
+    get:        async ({ params: {id}}) => await Chef.findById(id),            // Get chef by id
+    add:        async ({body}) => await Chef.create(body),                     // Add chef
+    set:        async ({ params: {id}, body}) => await Chef.findByIdAndUpdate(id, body, {
+                        new: true,
+                        runValidators: true
+                }),                                                            // Edit chef by id
+    delete:     async ({ params: {id}}) => await Chef.findByIdAndDelete(id)    // Delete chef by id
 };
 
 export default chefHandler;

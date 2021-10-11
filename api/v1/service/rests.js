@@ -1,27 +1,14 @@
-import Rest from "../../../models/Rest.js"; 
-const restHandler = {};
+import Rest from "../../../models/Rest.js";
 
-restHandler.getAllRests = async () => {     // Get all resturants 
-    return await Rest.find();
-};
-
-restHandler.getRest = async ({ params: {id}}) => {  // Get resturant by id
-    return await Rest.findById(id);
-};
-
-restHandler.addRest = async ({body}) => {    // Add resturant
-    return await Rest.create(body)
-};
-
-restHandler.setRest = async ({ params: {id}, body}) => { // Edit resturant by id
-    return await Rest.findByIdAndUpdate(id, body, {
-            new: true,
-            runValidators: true
-        });
-};
-
-restHandler.deleteRest = async ({ params: {id}}) => { // Delete resturant by id
-    return await Rest.findByIdAndDelete(id);
+const restHandler = {
+    getAll:     async () => await Rest.find(),                                 // Get all resturants
+    get:        async ({ params: {id}}) => await Rest.findById(id),            // Get resturant by id
+    add:        async ({body}) => await Rest.create(body),                     // Add resturant
+    set:        async ({ params: {id}, body}) => await Rest.findByIdAndUpdate(id, body, {
+                        new: true,
+                        runValidators: true
+                }),                                                            // Edit resturant by id
+    delete:     async ({ params: {id}}) => await Rest.findByIdAndDelete(id)    // Delete resturant by id
 };
 
 export default restHandler;

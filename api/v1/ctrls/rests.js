@@ -18,7 +18,7 @@ const responder = async (hndlr, sucmsg, failmsg, req, res) => {
 // @route   GET /api/v1/rests
 // @access  Public
 restRouter.get('/', async (req, res, next) => {
-    await responder(restHandler.getAllRests,`Show all resturants.`,`No resturants in database.`,req,res);
+    await responder(restHandler.getAll,`Show all resturants.`,`No resturants in database.`,req,res);
     next();
 });
 
@@ -26,7 +26,7 @@ restRouter.get('/', async (req, res, next) => {
 // @route   GET /api/v1/rests/:id
 // @access  Public
 restRouter.get('/:id', async (req, res, next) => { 
-    await responder(restHandler.getRest,`Show Resturant.`,`Resturant not found.`,req,res);
+    await responder(restHandler.get,`Show Resturant.`,`Resturant not found.`,req,res);
     next();
 });
 
@@ -34,7 +34,7 @@ restRouter.get('/:id', async (req, res, next) => {
 // @route   POST /api/v1/rests/
 // @access  Private
 restRouter.post('/', async (req, res, next) => {
-    await responder(restHandler.addRest,`Resturant profile created.`,`Resturant profile not created.`,req,res);
+    await responder(restHandler.add,`Resturant profile created.`,`Resturant profile not created.`,req,res);
     next();
 });
 
@@ -42,7 +42,7 @@ restRouter.post('/', async (req, res, next) => {
 // @route   PUT /api/v1/rests/:id
 // @access  Private
 restRouter.put('/:id', async (req, res, next) => { 
-    await responder(restHandler.setRest,`Resturant updated.`,`Resturant not updated.`,req,res);
+    await responder(restHandler.set,`Resturant updated.`,`Resturant not updated.`,req,res);
     next();
 });
 
@@ -50,7 +50,7 @@ restRouter.put('/:id', async (req, res, next) => {
 // @route   DELETE /api/v1/rests/:id
 // @access  Private
 restRouter.delete('/:id', async (req, res, next) => {
-    await responder(dishHandler.getAllDishes,`Resturant deleted.`,`Resturant not deleted.`,req,res);
+    await responder(restHandler.delete,`Resturant deleted.`,`Resturant not deleted.`,req,res);
     next();
 });
 

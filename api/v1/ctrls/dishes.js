@@ -18,7 +18,7 @@ const responder = async (hndlr, sucmsg, failmsg, req, res) => {
 // @route   GET /api/v1/dishes
 // @access  Public
 dishRouter.get('/', async (req, res, next) => {
-    await responder(dishHandler.getAllDishes,`Show all dishes.`,`No Dishes in database.`,req,res);
+    await responder(dishHandler.getAll,`Show all dishes.`,`No Dishes in database.`,req,res);
     next();
 });
 
@@ -26,7 +26,7 @@ dishRouter.get('/', async (req, res, next) => {
 // @route   GET /api/v1/dishes/:id
 // @access  Public
 dishRouter.get('/:id', async (req, res, next) => {
-    await responder(dishHandler.getDish,`Show dish.`,`Dish not found.`,req,res);
+    await responder(dishHandler.get,`Show dish.`,`Dish not found.`,req,res);
     next();
 });
 
@@ -34,7 +34,7 @@ dishRouter.get('/:id', async (req, res, next) => {
 // @route   POST /api/v1/dishes/
 // @access  Private
 dishRouter.post('/', async (req, res, next) => {
-    await responder(dishHandler.addDish,`Dish created.`,`Dish not created.`,req,res);
+    await responder(dishHandler.add,`Dish created.`,`Dish not created.`,req,res);
     next();
 });
 
@@ -42,7 +42,7 @@ dishRouter.post('/', async (req, res, next) => {
 // @route   PUT /api/v1/dishes/:id
 // @access  Private
 dishRouter.put('/:id', async (req, res, next) => { 
-    await responder(dishHandler.setDish,`Dish updated.`,`Dish not updated.`,req,res);
+    await responder(dishHandler.set,`Dish updated.`,`Dish not updated.`,req,res);
     next();
 });
 
@@ -50,7 +50,7 @@ dishRouter.put('/:id', async (req, res, next) => {
 // @route   DELETE /api/v1/dishes/:id
 // @access  Private
 dishRouter.delete('/:id', async (req, res, next) => {
-    await responder(dishHandler.setDish,`Dish deleted.`,`Dish not deleted.`,req,res);
+    await responder(dishHandler.delete,`Dish deleted.`,`Dish not deleted.`,req,res);
     next();
 });
 

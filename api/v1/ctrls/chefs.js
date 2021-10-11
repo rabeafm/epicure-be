@@ -18,7 +18,7 @@ const responder = async (hndlr, sucmsg, failmsg, req, res) => {
 // @route   GET /api/v1/chefs
 // @access  Public
 chefRouter.get('/', async (req, res, next) => { 
-    await responder(chefHandler.getAllChefs,`Show all chefs.`,`No Chefs in database.`,req,res);
+    await responder(chefHandler.getAll,`Show all chefs.`,`No Chefs in database.`,req,res);
     next();
 });
 
@@ -26,7 +26,7 @@ chefRouter.get('/', async (req, res, next) => {
 // @route   GET /api/v1/chefs/:id
 // @access  Public
 chefRouter.get('/:id', async (req, res, next) => {
-    await responder(chefHandler.getChef,`Show chef.`,`Chef not found.`,req,res)
+    await responder(chefHandler.get,`Show chef.`,`Chef not found.`,req,res)
     next();
 });
 
@@ -34,7 +34,7 @@ chefRouter.get('/:id', async (req, res, next) => {
 // @route   POST /api/v1/chefs/
 // @access  Private
 chefRouter.post('/', async (req, res, next) => { 
-    await responder(chefHandler.addChef,`Chef profile created.`,`Chef profile not Created.`,req,res)
+    await responder(chefHandler.add,`Chef profile created.`,`Chef profile not Created.`,req,res)
     next();
 });
 
@@ -42,7 +42,7 @@ chefRouter.post('/', async (req, res, next) => {
 // @route   PUT /api/v1/chefs/:id
 // @access  Private
 chefRouter.put('/:id', async (req, res, next) => { 
-    await responder(chefHandler.setChef,`Chef Updated.`,`Chef not updated.`,req,res)
+    await responder(chefHandler.set,`Chef Updated.`,`Chef not updated.`,req,res)
     next(); 
 });
 
@@ -51,7 +51,7 @@ chefRouter.put('/:id', async (req, res, next) => {
 // @route   DELETE /api/v1/chefs/:id
 // @access  Private
 chefRouter.delete('/:id', async (req, res, next) => {
-    await responder(chefHandler.deleteChef,`Chef Deleted.`,`Chef not Deleted.`,req,res)
+    await responder(chefHandler.delete,`Chef Deleted.`,`Chef not Deleted.`,req,res)
     next();
 });
 
