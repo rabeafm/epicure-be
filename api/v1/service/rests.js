@@ -1,6 +1,6 @@
 import Rest from "../../../models/Rest.js";
 
-const restHandler = {
+export default restHandler = {
     getAll:     async () => await Rest.find(),                                 // Get all resturants
     get:        async ({ params: {id}}) => await Rest.findById(id),            // Get resturant by id
     add:        async ({body}) => await Rest.create(body),                     // Add resturant
@@ -10,5 +10,3 @@ const restHandler = {
                 }),                                                            // Edit resturant by id
     delete:     async ({ params: {id}}) => await Rest.findByIdAndDelete(id)    // Delete resturant by id
 };
-
-export default restHandler;

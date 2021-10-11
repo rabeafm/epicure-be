@@ -1,6 +1,6 @@
 import Chef from '../../../models/Chef.js'
 
-const chefHandler = {
+export default chefHandler = {
     getAll:     async () => await Chef.find(),                                 // Get all chefs
     get:        async ({ params: {id}}) => await Chef.findById(id),            // Get chef by id
     add:        async ({body}) => await Chef.create(body),                     // Add chef
@@ -10,5 +10,3 @@ const chefHandler = {
                 }),                                                            // Edit chef by id
     delete:     async ({ params: {id}}) => await Chef.findByIdAndDelete(id)    // Delete chef by id
 };
-
-export default chefHandler;

@@ -1,6 +1,6 @@
 import Dish from "../../../models/Dish.js"; 
 
-const dishHandler = {
+export default dishHandler = {
     getAll:     async () => await Dish.find(),                                 // Get all dishes
     get:        async ({ params: {id}}) => await Dish.findById(id),            // Get dish by id
     add:        async ({body}) => await Dish.create(body),                     // Add dish
@@ -10,5 +10,3 @@ const dishHandler = {
                 }),                                                            // Edit dish by id
     delete:     async ({ params: {id}}) => await Dish.findByIdAndDelete(id)    // Delete dish by id
 };
-
-export default dishHandler;
