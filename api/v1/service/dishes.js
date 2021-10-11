@@ -1,59 +1,27 @@
 import Dish from "../../../models/Dish.js"; 
-
 const dishHandler = {};
 
-dishHandler.getAllDishes = async (res) => {     // Get all dishes
-    try {
-        const dishes = await Dish.find();
-        res.status(200).json({ success: true, msg: `get all dishes.`, count: dishes.length, data: dishes});
-    } catch (err) {
-        res.status(400).json({ success: false })
-    }
+dishHandler.getAllDishes = async () => {     // Get all dishes
+    return await Dish.find();
 };
 
-dishHandler.getDish = async (id, res) => {  // Get dish by id
-    try {
-        const dish = await Dish.findById(id);
-        if(!dish)
-            return res.status(400).json({ success: false, msg: `Dish not found.`});    
-        res.status(200).json({ success: true, msg: `Show dish.`, data: dish});
-    } catch (err) {
-        res.status(400).json({ success: false})
-    }
+dishHandler.getDish = async ({ params: {id}}) => {  // Get dish by id
+    return await Dish.findById(id);
 };
 
-dishHandler.addDish = async (body, res) => {    // Add dish
-    try {
-        const dish = await Dish.create(body)
-        res.status(201).json({ success: true, msg: `Dish created.`, data: dish});
-    } catch (err) {
-        res.status(400).json({ success: false })
-    }
+dishHandler.addDish = async ({body}) => {    // Add dish
+    return await Dish.create(body);
 };
 
-dishHandler.setDish = async (id, body, res) => { // Edit dish by id
-    try {
-        const dish = await Dish.findByIdAndUpdate(id, body, {
+dishHandler.setDish = async ({ params: {id}, body}) => { // Edit dish by id
+    return await Dish.findByIdAndUpdate(id, body, {
             new: true,
             runValidators: true
         });
-        if(!dish)
-            return res.status(400).json({ success: false});    
-        res.status(200).json({ success: true, msg: `Dish Updated.`, data: dish});
-    } catch (err) {
-        res.status(400).json({ success: false})
-    }
 };
 
-dishHandler.deleteDish = async (id, res) => { // Delete dish by id
-    try {
-        const dish = await Dish.findByIdAndDelete(id);
-        if(!dish)
-            return res.status(400).json({ success: false});    
-        res.status(200).json({ success: true, msg: `Dish Deleted.`, data: {}});
-    } catch (err) {
-        res.status(400).json({ success: false})
-    }
+dishHandler.deleteDish = async ({ params: {id}}) => { // Delete dish by id
+    return await Dish.findByIdAndDelete(id);
 };
 
 export default dishHandler;
