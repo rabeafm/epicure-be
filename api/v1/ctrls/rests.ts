@@ -1,5 +1,5 @@
 import { Router, Request, Response, NextFunction } from 'express';
-import restHandler from '../service/rests.js';
+import restHandler from '../service/rests';
 const restRouter = Router();
 
 const responder = async (

@@ -1,100 +1,111 @@
-import { Router, Request, Response, NextFunction } from 'express';
-import chefHandler from '../service/chefs.js';
-const chefRouter = Router();
+import { Request, Response, NextFunction } from 'express';
+import BaseCtrl from './basectrl';
+import chefHandler from '../service/chefs';
 
-const responder = async (
-  hndlr: Function,
-  sucmsg: string,
-  failmsg: string,
-  req: Request,
-  res: Response
-) => {
-  try {
-    const data = await hndlr(req);
-    if (!data) res.status(400).json({ success: false, msg: failmsg });
-    else
-      res
-        .status(200)
-        .json({ success: true, msg: sucmsg, count: data.length, data: data });
-  } catch (err: unknown) {
-    res.status(400).json({ success: false, msg: err });
+export default class ChefCtrl extends BaseCtrl {
+  //path = '/chefs';
+
+  constructor() {
+    super();
+    this.router.get('/', this.getAllChefs.bind(this));
+    this.router.get('/:id', this.getChef.bind(this));
+    this.router.post('/', this.addChef.bind(this));
+    this.router.put('/:id', this.updateChef.bind(this));
+    this.router.delete('/:id', this.deleteChef.bind(this));
   }
-};
 
-// @desc    Get all chefs
-// @route   GET /api/v1/chefs
-// @access  Public
-chefRouter.get('/', async (req: Request, res: Response, next: NextFunction) => {
-  await responder(
-    chefHandler.getAll,
-    `Show all chefs.`,
-    `No Chefs in database.`,
-    req,
-    res
-  );
-  next();
-});
-
-// @desc    Get single chef
-// @route   GET /api/v1/chefs/:id
-// @access  Public
-chefRouter.get(
-  '/:id',
-  async (req: Request, res: Response, next: NextFunction) => {
-    await responder(chefHandler.get, `Show chef.`, `Chef not found.`, req, res);
+  // @desc    Get all chefs
+  // @route   GET /api/v1/chefs
+  // @access  Public
+  async getAllChefs(
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ): Promise<void> {
+    await this.responder(
+      chefHandler.getAll,
+      `Show all chefs.`,
+      `No Chefs in database.`,
+      req,
+      res,
+      next
+    );
     next();
   }
-);
 
-// @desc    Create new chef
-// @route   POST /api/v1/chefs/
-// @access  Private
-chefRouter.post(
-  '/',
-  async (req: Request, res: Response, next: NextFunction) => {
-    await responder(
+  // @desc    Get single chef
+  // @route   GET /api/v1/chefs/:id
+  // @access  Public
+  async getChef(
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ): Promise<void> {
+    await this.responder(
+      chefHandler.get,
+      `Show chef.`,
+      `Chef not found.`,
+      req,
+      res,
+      next
+    );
+    next();
+  }
+
+  // @desc    Create new chef
+  // @route   POST /api/v1/chefs/
+  // @access  Private
+  async addChef(
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ): Promise<void> {
+    await this.responder(
       chefHandler.add,
       `Chef profile created.`,
       `Chef profile not Created.`,
       req,
-      res
+      res,
+      next
     );
     next();
   }
-);
 
-// @desc    Update chef
-// @route   PUT /api/v1/chefs/:id
-// @access  Private
-chefRouter.put(
-  '/:id',
-  async (req: Request, res: Response, next: NextFunction) => {
-    await responder(
+  // @desc    Update chef
+  // @route   PUT /api/v1/chefs/:id
+  // @access  Private
+  async updateChef(
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ): Promise<void> {
+    await this.responder(
       chefHandler.set,
       `Chef Updated.`,
       `Chef not updated.`,
       req,
-      res
+      res,
+      next
     );
     next();
   }
-);
 
-// @desc    Delete chef
-// @route   DELETE /api/v1/chefs/:id
-// @access  Private
-chefRouter.delete(
-  '/:id',
-  async (req: Request, res: Response, next: NextFunction) => {
-    await responder(
+  // @desc    Delete chef
+  // @route   DELETE /api/v1/chefs/:id
+  // @access  Private
+  async deleteChef(
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ): Promise<void> {
+    await this.responder(
       chefHandler.delete,
       `Chef Deleted.`,
       `Chef not Deleted.`,
       req,
-      res
+      res,
+      next
     );
     next();
   }
-);
-
-export default chefRouter;
+}

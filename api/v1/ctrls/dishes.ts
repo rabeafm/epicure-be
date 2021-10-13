@@ -1,5 +1,5 @@
 import { Router, Request, Response, NextFunction } from 'express';
-import dishHandler from '../service/dishes.js';
+import dishHandler from '../service/dishes';
 const dishRouter = Router();
 
 const responder = async (

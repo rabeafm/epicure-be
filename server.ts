@@ -1,8 +1,8 @@
 import express from 'express';
 import dotenv from 'dotenv';
 import morgan from 'morgan';
-import connectDB from './config/db.js';
-import router from './api/v1/ctrls/index.js';
+import connectDB from './config/db';
+import router from './api/v1/ctrls/index';
 
 // load env variables
 dotenv.config({ path: './config/config.env' });

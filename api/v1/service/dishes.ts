@@ -1,5 +1,5 @@
 import { Request } from 'express';
-import Dish from '../../../models/Dish.js';
+import Dish from '../../../models/Dish';
 
 const dishHandler = {
   getAll: async () => await Dish.find(), // Get all dishes
