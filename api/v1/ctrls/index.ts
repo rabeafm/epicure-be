@@ -1,13 +1,13 @@
 import { Router } from 'express';
-import chefRouter from './chefs.js';
-import dishesRouter from './dishes.js';
-import restsRouter from './rests.js';
+import ChefCtrl from './chefs';
+import DishCtrl from './dishes';
+import RestCtrl from './rests';
 
 const router = Router();
 
 // main routes
-router.use('/chefs', chefRouter);
-router.use('/dishes', dishesRouter);
-router.use('/rests', restsRouter);
+router.use('/chefs', new ChefCtrl().router);
+router.use('/dishes', new DishCtrl().router);
+router.use('/rests', new RestCtrl().router);
 
 export default router;

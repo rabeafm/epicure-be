@@ -15,7 +15,7 @@ const Chef = new Schema({
     trim: true,
     match: [
       /^(?:([A-Za-z]+):)?(\/{0,3})([0-9.\-A-Za-z]+)(?::(\d+))?(?:\/([^?#]*))?(?:\?([^#]*))?(?:#(.*))?$/,
-      'Please use a valid url',
+      'Please use a valid image url',
     ],
     maxlength: [500, 'Image url cant be more than 500 characters'],
     default: '',
@@ -23,10 +23,10 @@ const Chef = new Schema({
   descr: {
     type: String,
     trim: true,
-    maxlength: [500, 'Description cant be more than 500 characters'],
+    maxlength: [500, 'Description can not be more than 500 characters'],
     default: '',
   },
-  rests: [{ type: Schema.Types.ObjectId, ref: 'rest' }],
+  rests: [{ type: Schema.Types.ObjectId, ref: 'rest', required: true }],
 });
 
 export default mongoose.model('Chef', Chef);

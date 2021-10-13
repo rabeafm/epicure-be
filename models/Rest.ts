@@ -20,7 +20,7 @@ const Rest = new Schema({
     maxlength: [500, 'Image url cant be more than 500 characters'],
     default: '',
   },
-  chef: { type: Schema.Types.ObjectId, required: true },
+  chef: { type: Schema.Types.ObjectId, ref: 'chef', required: true },
   dishes: [{ type: Schema.Types.ObjectId, ref: 'dish', required: true }],
 });
 
