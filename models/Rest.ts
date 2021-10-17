@@ -1,6 +1,4 @@
-import mongoose from 'mongoose';
-
-const Schema = mongoose.Schema;
+import { Schema, model } from 'mongoose';
 
 const Rest = new Schema({
   name: {
@@ -24,4 +22,4 @@ const Rest = new Schema({
   dishes: [{ type: Schema.Types.ObjectId, ref: 'dish', required: true }],
 });
 
-export default mongoose.model('Rest', Rest);
+export default model('rest', Rest);

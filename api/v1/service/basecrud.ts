@@ -1,21 +1,33 @@
 import { Request } from 'express';
 
-export default abstract class BaseCRUD {
-  private model;
+class BaseCRUD {
+  protected model;
 
   constructor(mod: any) {
     this.model = mod;
   }
 
-  public getAll = async () => await this.model.find();
-  public get = async ({ params: { id } }: Request) =>
-    await this.model.findById(id);
-  public add = async ({ body }: Request) => await this.model.create(body);
-  public set = async ({ params: { id }, body }: Request) =>
-    await this.model.findByIdAndUpdate(id, body, {
+  public async getAll() {
+    return await this.model.find();
+  }
+  public async get({ params: { id } }: Request) {
+    return await this.model.findById(id);
+  }
+
+  public async add({ body }: Request) {
+    return await this.model.create(body);
+  }
+
+  public async set({ params: { id }, body }: Request) {
+    return await this.model.findByIdAndUpdate(id, body, {
       new: true,
       runValidators: true,
     });
-  public delete = async ({ params: { id } }: Request) =>
-    await this.model.findByIdAndDelete(id);
+  }
+
+  public async delete({ params: { id } }: Request) {
+    return await this.model.findByIdAndDelete(id);
+  }
 }
+
+export default BaseCRUD;

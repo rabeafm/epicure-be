@@ -1,24 +1,31 @@
 import { Request } from 'express';
 import BaseCRUD from './basecrud';
-import Rest from '../../../models/Rest';
 import Chef from '../../../models/Chef';
+import Dish from '../../../models/Dish';
 
-export default new (class DishCRUD extends BaseCRUD {
-  // change functions
-  public add = async ({ body }: Request) => {
-    let chef = await Chef.findById(body.chef);
-    let rest = await Rest.create(body);
-    chef.rests.push(rest);
-    chef.save();
-    return rest;
-  }; // Add resturant & Update chef
+class RestCRUD extends BaseCRUD {
+  // Override functions
 
-  public delete = async ({ params: { id }, body }: Request) => {
-    let chef = await Chef.findById(body.chef);
-    let rest = await Rest.findById(id);
-    chef.rests.pull(rest);
-    chef.save();
-    rest.delete();
+  public async getAll() {
+    return await this.model.find().populate('dishes', '-resturant').exec();
+  }
+
+  public async get({ params: { id } }: Request) {
+    return await this.model.findById(id).populate('dishes').exec();
+  }
+
+  public async add({ body }: Request) {
+    let rest = await this.model.create(body);
+    await Chef.findOneAndUpdate({ _id: body.chef }, { $push: { rests: rest } });
     return rest;
-  }; // Delete resturant & update chef
-})(Rest);
+  } // Add resturant & Update chef
+
+  public async delete({ params: { id }, body }: Request) {
+    await Chef.findOneAndUpdate({ _id: body.chef }, { $pull: { rests: id } });
+    let rest = await this.model.findByIdAndDelete(id);
+    await Dish.deleteMany({ resturant: id });
+    return rest;
+  } // Delete resturant & update chef
+}
+
+export default RestCRUD;

@@ -1,16 +1,25 @@
 import BaseCtrl from './basectrl';
 import RestCRUD from '../service/rests';
+import Rest from '../../../models/Rest';
 
-export default class DishCtrl extends BaseCtrl {
+class RestCtrl extends BaseCtrl {
   // Define Handler
-  handler = RestCRUD;
+  handler = new RestCRUD(Rest);
 
   // Define Messages
   protected messages = {
-    getall: { succ: `Show all resturants.`, fail: `No resturants in database.` }, // @access Public
-    get: { succ: `Show resturant.`, fail: `Resturant not found.` }, // @access  Public
-    add: { succ: `Resturant created.`, fail: `Resturant not Created.` }, // @access  Private
-    update: { succ: `Resturant updated.`, fail: `Resturant not updated.` }, // @access  Private
-    delete: { succ: 'Resturant deleted', fail: 'Resturant not Deleted' }, // @access  Private
+    getall: {
+      success: `Show all resturants.`,
+      failure: `No resturants in database.`,
+    }, // @access Public
+    get: { success: `Show resturant.`, failure: `Resturant not found.` }, // @access  Public
+    add: { success: `Resturant created.`, failure: `Resturant not Created.` }, // @access  Private
+    update: {
+      success: `Resturant updated.`,
+      failure: `Resturant not updated.`,
+    }, // @access  Private
+    delete: { success: 'Resturant deleted', failure: 'Resturant not Deleted' }, // @access  Private
   };
 }
+
+export default RestCtrl;

@@ -1,6 +1,4 @@
-import mongoose from 'mongoose';
-
-const Schema = mongoose.Schema;
+import { Schema, model } from 'mongoose';
 
 const Dish = new Schema({
   name: {
@@ -29,4 +27,4 @@ const Dish = new Schema({
   resturant: { type: Schema.Types.ObjectId, ref: 'rest', required: true },
 });
 
-export default mongoose.model('Dish', Dish);
+export default model('dish', Dish);

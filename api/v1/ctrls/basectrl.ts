@@ -1,122 +1,112 @@
-import { Router, Request, Response, NextFunction } from 'express';
-import BaseCRUD from '../service/basecrud';
+import { Router, Request, Response } from 'express';
 
-export default abstract class BaseCtrl {
+class BaseCtrl {
   public router: Router = Router();
-  protected handler: BaseCRUD;
+  protected handler: any;
 
   /* General Messages* */
   protected messages = {
-    getall: { succ: `Show all.`, fail: `None in database.` },
-    get: { succ: `Show single.`, fail: `Single not found.` },
-    add: { succ: `Single created.`, fail: `Single not Created.` },
-    update: { succ: `Single updated.`, fail: `Single not updated.` },
-    delete: { succ: 'Single deleted', fail: 'Single not Deleted' },
+    getall: { success: `Show all.`, failure: `None in database.` },
+    get: { success: `Show single.`, failure: `Single not found.` },
+    add: { success: `Single created.`, failure: `Single not Created.` },
+    update: { success: `Single updated.`, failure: `Single not updated.` },
+    delete: { success: 'Single deleted', failure: 'Single not Deleted' },
   };
 
   /* General Constructor */
   constructor() {
-    this.router.get('/', this.getAll);
-    this.router.get('/:id', this.get);
-    this.router.post('/', this.add);
-    this.router.put('/:id', this.update);
-    this.router.delete('/:id', this.delete);
+    this.router.get('/', this.getAll.bind(this));
+    this.router.get('/:id', this.get.bind(this));
+    this.router.post('/', this.add.bind(this));
+    this.router.put('/:id', this.update.bind(this));
+    this.router.delete('/:id', this.delete.bind(this));
   }
 
   /* General Functions */
   // @desc    Get all
   // @route   GET '/'
-  public getAll = async (req: Request, res: Response, next: NextFunction) => {
+  public async getAll(req: Request, res: Response) {
     await this.responder(
-      this.handler.getAll,
-      this.messages.getall.succ,
-      this.messages.getall.fail,
+      this.handler.getAll.bind(this.handler),
+      this.messages.getall.success,
+      this.messages.getall.failure,
       req,
-      res,
-      next
+      res
     );
-    next();
-  };
+  }
 
   // @desc    Get single
   // @route   GET '/:id'
-  public get = async (req: Request, res: Response, next: NextFunction) => {
+  public async get(req: Request, res: Response) {
     await this.responder(
-      this.handler.get,
-      this.messages.get.succ,
-      this.messages.get.fail,
+      this.handler.get.bind(this.handler),
+      this.messages.get.success,
+      this.messages.get.failure,
       req,
-      res,
-      next
+      res
     );
-    next();
-  };
+  }
 
   // @desc    Create new
   // @route   POST '/'
-  public add = async (req: Request, res: Response, next: NextFunction) => {
+  public async add(req: Request, res: Response) {
     await this.responder(
-      this.handler.add,
-      this.messages.add.succ,
-      this.messages.add.fail,
+      this.handler.add.bind(this.handler),
+      this.messages.add.success,
+      this.messages.add.failure,
       req,
-      res,
-      next
+      res
     );
-    next();
-  };
+  }
 
   // @desc    Update Single
   // @route   PUT '/:id'
-  public update = async (req: Request, res: Response, next: NextFunction) => {
+  public async update(req: Request, res: Response) {
     await this.responder(
-      this.handler.set,
-      this.messages.update.succ,
-      this.messages.update.fail,
+      this.handler.set.bind(this.handler),
+      this.messages.update.success,
+      this.messages.update.failure,
       req,
-      res,
-      next
+      res
     );
-    next();
-  };
+  }
 
   // @desc    Delete Single
   // @route   '/:id'
-  public delete = async (req: Request, res: Response, next: NextFunction) => {
+  public async delete(req: Request, res: Response) {
     await this.responder(
-      this.handler.delete,
-      this.messages.delete.succ,
-      this.messages.delete.fail,
+      this.handler.delete.bind(this.handler),
+      this.messages.delete.success,
+      this.messages.delete.failure,
       req,
-      res,
-      next
+      res
     );
-    next();
-  };
+  }
 
   /* Response service function */
-  async responder(
-    hndlr: Function,
-    sucmsg: string,
-    failmsg: string,
+  private async responder(
+    handler: Function,
+    successmsg: string,
+    failuremsg: string,
     req: Request,
-    res: Response,
-    next: NextFunction
+    res: Response
   ): Promise<void> {
     try {
-      const data = await hndlr(req);
+      const data = await handler(req);
       if (!data) {
-        res.status(400).json({ success: false, msg: failmsg });
+        res.status(400).json({ success: false, msg: failuremsg });
       } else {
         res.status(200).json({
           success: true,
-          msg: sucmsg,
+          msg: successmsg,
           count: data.length,
           data: data,
         });
       }
     } catch (err: unknown) {
-      res.status(400).json({ success: false, msg: err });
+      res.status(400).json({ success: false, msg: err as Error });
     }
   }
 }
+
+export default BaseCtrl;
