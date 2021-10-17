@@ -1,4 +1,4 @@
-$Epicure Api
+# Epicure Api
 
 ## Api Description
 
