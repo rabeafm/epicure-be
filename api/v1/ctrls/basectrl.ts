@@ -4,7 +4,7 @@ class BaseCtrl {
   public router: Router = Router();
   protected handler: any;
 
-  /* General Messages* */
+  /* General messages for returned values */
   protected messages = {
     getall: { success: `Show all.`, failure: `None in database.` },
     get: { success: `Show single.`, failure: `Single not found.` },
@@ -13,7 +13,7 @@ class BaseCtrl {
     delete: { success: 'Single deleted', failure: 'Single not Deleted' },
   };
 
-  /* General Constructor */
+  /* General constructor which sets the function to be used based on routes */
   constructor() {
     this.router.get('/', this.getAll.bind(this));
     this.router.get('/:id', this.get.bind(this));
@@ -23,8 +23,10 @@ class BaseCtrl {
   }
 
   /* General Functions */
-  // @desc    Get all
-  // @route   GET '/'
+  /** Get all elements from Database (route GET '/').
+   * @param req Http Request
+   * @param res Http Response
+   * @return Promise                                 */
   public async getAll(req: Request, res: Response) {
     await this.responder(
       this.handler.getAll.bind(this.handler),
@@ -35,8 +37,10 @@ class BaseCtrl {
     );
   }
 
-  // @desc    Get single
-  // @route   GET '/:id'
+  /** Get single element from Database (route GET '/:id').
+   * @param req Http Request
+   * @param res Http Response
+   * @return Promise                                 */
   public async get(req: Request, res: Response) {
     await this.responder(
       this.handler.get.bind(this.handler),
@@ -47,8 +51,10 @@ class BaseCtrl {
     );
   }
 
-  // @desc    Create new
-  // @route   POST '/'
+  /** Add single element to Database (route POST '/').
+   * @param req Http Request
+   * @param res Http Response
+   * @return Promise                                 */
   public async add(req: Request, res: Response) {
     await this.responder(
       this.handler.add.bind(this.handler),
@@ -59,8 +65,10 @@ class BaseCtrl {
     );
   }
 
-  // @desc    Update Single
-  // @route   PUT '/:id'
+  /** Update single element in Database (route PUT '/:id').
+   * @param req Http Request
+   * @param res Http Response
+   * @return Promise                                 */
   public async update(req: Request, res: Response) {
     await this.responder(
       this.handler.set.bind(this.handler),
@@ -71,8 +79,10 @@ class BaseCtrl {
     );
   }
 
-  // @desc    Delete Single
-  // @route   '/:id'
+  /** Delete single element from Database (route DELETE '/:id').
+   * @param req Http Request
+   * @param res Http Response
+   * @return Promise                                        */
   public async delete(req: Request, res: Response) {
     await this.responder(
       this.handler.delete.bind(this.handler),
@@ -84,6 +94,15 @@ class BaseCtrl {
   }
 
   /* Response service function */
+  /** Data retrieval and manipulation function, recieves function,
+   *  messages, request & response. fetches data and returns proper
+   *  message and data based on function.
+   * @param handler service function needed for data retrieval
+   * @param successmsg message in case of success
+   * @param failuremsg message in case of failure
+   * @param req Http Request
+   * @param res Http Response
+   * @return Promise                                 */
   private async responder(
     handler: Function,
     successmsg: string,
