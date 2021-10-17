@@ -6,8 +6,12 @@ import RestCtrl from './rests';
 const router = Router();
 
 // main routes
-router.use('/chefs', new ChefCtrl().router);
-router.use('/dishes', new DishCtrl().router);
-router.use('/rests', new RestCtrl().router);
+const chefctrl = new ChefCtrl();
+const dishctrl = new DishCtrl();
+const restctrl = new RestCtrl();
+
+router.use('/chefs', chefctrl.router);
+router.use('/dishes', dishctrl.router);
+router.use('/rests', restctrl.router);
 
 export default router;
