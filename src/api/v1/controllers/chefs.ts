@@ -1,11 +1,10 @@
-import { Router, Request, Response } from 'express';
 import BaseCtrl from './basectrl';
-import ChefCRUD from '../service/chefs';
-import Chef from '../../../models/Chef';
+import ChefCRUD from '../services/chefs';
+import ChefSchema from '../models/Chef';
 
 class ChefCtrl extends BaseCtrl {
   // Define Handler
-  handler = new ChefCRUD(Chef);
+  handler = new ChefCRUD(ChefSchema);
 
   // Define Messages
   protected messages = {

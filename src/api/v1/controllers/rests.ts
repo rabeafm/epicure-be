@@ -1,10 +1,10 @@
 import BaseCtrl from './basectrl';
-import RestCRUD from '../service/rests';
-import Rest from '../../../models/Rest';
+import RestCRUD from '../services/rests';
+import RestSchema from '../models/Rest';
 
 class RestCtrl extends BaseCtrl {
   // Define Handler
-  handler = new RestCRUD(Rest);
+  handler = new RestCRUD(RestSchema);
 
   // Define Messages
   protected messages = {

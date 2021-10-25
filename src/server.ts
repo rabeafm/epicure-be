@@ -1,20 +1,25 @@
-import express from 'express';
 import dotenv from 'dotenv';
-import morgan from 'morgan';
 import connectDB from './config/db';
-import router from './api/v1/ctrls/index';
+import express from 'express';
+import cors from 'cors';
+import cookieParser from 'cookie-parser';
+import morgan from 'morgan';
+import MainRoutes from './routes';
 
-dotenv.config({ path: './config/config.env' }); // load env variables
+dotenv.config({ path: './src/config/config.env' }); // load env variables
 connectDB(); // connect to database
 
 const app = express(); // run express
+app.use(cors());
 
 app.use(express.json()); // JSON parser
 app.use(express.urlencoded({ extended: false }));
+app.use(cookieParser()); // Cookie parser
 
 if (process.env.NODE_ENV === 'development') app.use(morgan('dev')); // dev logger middleware
 
-app.use('/api/v1', router); // use router
+const mainRoutes = new MainRoutes();
+app.use('/api', mainRoutes.router); // use main router
 
 const server = app.listen(process.env.PORT || 4000, () => {
   // activate server

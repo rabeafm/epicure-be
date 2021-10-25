@@ -1,6 +1,6 @@
 import { Schema, model } from 'mongoose';
 
-const Dish = new Schema({
+const DishSchema = new Schema({
   name: {
     type: String,
     required: [true, 'Please add dish name'],
@@ -27,4 +27,4 @@ const Dish = new Schema({
   resturant: { type: Schema.Types.ObjectId, ref: 'rest', required: true },
 });
 
-export default model('dish', Dish);
+export default model('dish', DishSchema);

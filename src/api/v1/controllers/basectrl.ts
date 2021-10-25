@@ -1,4 +1,5 @@
-import { Router, Request, Response } from 'express';
+import { Router, Request, Response, NextFunction } from 'express';
+import protect from '../middleware/auth';
 
 class BaseCtrl {
   public router: Router = Router();
@@ -15,11 +16,15 @@ class BaseCtrl {
 
   /* General constructor which sets the function to be used based on routes */
   constructor() {
+    this.initializeRoutes();
+  }
+
+  protected initializeRoutes() {
     this.router.get('/', this.getAll.bind(this));
     this.router.get('/:id', this.get.bind(this));
-    this.router.post('/', this.add.bind(this));
-    this.router.put('/:id', this.update.bind(this));
-    this.router.delete('/:id', this.delete.bind(this));
+    this.router.post('/', protect, this.add.bind(this));
+    this.router.put('/:id', protect, this.update.bind(this));
+    this.router.delete('/:id', protect, this.delete.bind(this));
   }
 
   /* General Functions */
@@ -27,13 +32,14 @@ class BaseCtrl {
    * @param req Http Request
    * @param res Http Response
    * @return Promise                                 */
-  public async getAll(req: Request, res: Response) {
+  public async getAll(req: Request, res: Response, next: NextFunction) {
     await this.responder(
       this.handler.getAll.bind(this.handler),
       this.messages.getall.success,
       this.messages.getall.failure,
       req,
-      res
+      res,
+      next
     );
   }
 
@@ -41,13 +47,14 @@ class BaseCtrl {
    * @param req Http Request
    * @param res Http Response
    * @return Promise                                 */
-  public async get(req: Request, res: Response) {
+  public async get(req: Request, res: Response, next: NextFunction) {
     await this.responder(
       this.handler.get.bind(this.handler),
       this.messages.get.success,
       this.messages.get.failure,
       req,
-      res
+      res,
+      next
     );
   }
 
@@ -55,13 +62,14 @@ class BaseCtrl {
    * @param req Http Request
    * @param res Http Response
    * @return Promise                                 */
-  public async add(req: Request, res: Response) {
+  public async add(req: Request, res: Response, next: NextFunction) {
     await this.responder(
       this.handler.add.bind(this.handler),
       this.messages.add.success,
       this.messages.add.failure,
       req,
-      res
+      res,
+      next
     );
   }
 
@@ -69,13 +77,14 @@ class BaseCtrl {
    * @param req Http Request
    * @param res Http Response
    * @return Promise                                 */
-  public async update(req: Request, res: Response) {
+  public async update(req: Request, res: Response, next: NextFunction) {
     await this.responder(
       this.handler.set.bind(this.handler),
       this.messages.update.success,
       this.messages.update.failure,
       req,
-      res
+      res,
+      next
     );
   }
 
@@ -83,13 +92,14 @@ class BaseCtrl {
    * @param req Http Request
    * @param res Http Response
    * @return Promise                                        */
-  public async delete(req: Request, res: Response) {
+  public async delete(req: Request, res: Response, next: NextFunction) {
     await this.responder(
       this.handler.delete.bind(this.handler),
       this.messages.delete.success,
       this.messages.delete.failure,
       req,
-      res
+      res,
+      next
     );
   }
 
@@ -103,16 +113,18 @@ class BaseCtrl {
    * @param req Http Request
    * @param res Http Response
    * @return Promise                                 */
-  private async responder(
+  protected async responder(
     handler: Function,
     successmsg: string,
     failuremsg: string,
     req: Request,
-    res: Response
+    res: Response,
+    next: NextFunction
   ): Promise<void> {
     try {
       const data = await handler(req);
       if (!data) {
+        res.set('Access-Control-Allow-Origin', '*');
         res.status(400).json({ success: false, msg: failuremsg });
       } else {
         res.status(200).json({
