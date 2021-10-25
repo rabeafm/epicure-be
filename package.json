@@ -1,0 +1,53 @@
+{
+  "name": "epicure",
+  "version": "0.0.0",
+  "description": "Epicure is a gourmet server presenting chefs, resturants and dishes",
+  "apidoc": {
+    "name": "Epicure Api Server",
+    "version": "0.0.0",
+    "description": "Welcome to Epicure API, an API for resturants worth serving. Epicure is an api for chefs resturants and dishes. you can use epicure api to recieve information about chefs and their opened resturants as well as recieve data about the dishes that are served in each resturant. You can add, update & delete a chefs profile, a resturant profile and a dish profile.",
+    "title": "Epicure apiDoc",
+    "url": "http://localhost:4001/api/v1"
+  },
+  "main": "server.js",
+  "dependencies": {
+    "apidoc": "^0.50.0",
+    "bcryptjs": "^2.4.3",
+    "cookie-parser": "^1.4.5",
+    "cors": "^2.8.5",
+    "dotenv": "^10.0.0",
+    "express": "^4.17.1",
+    "jsonwebtoken": "^8.5.1",
+    "mongodb": "^4.1.3",
+    "mongoose": "^6.0.10"
+  },
+  "devDependencies": {
+    "@types/bcryptjs": "^2.4.2",
+    "@types/cookie-parser": "^1.4.2",
+    "@types/cors": "^2.8.12",
+    "@types/express": "^4.17.13",
+    "@types/jsonwebtoken": "^8.5.5",
+    "@types/morgan": "^1.9.3",
+    "@types/node": "^16.10.3",
+    "morgan": "^1.10.0",
+    "ts-node": "^10.3.0",
+    "typescript": "^4.4.3"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node dist/server.js",
+    "build": "tsc -p tsconfig.json",
+    "dev": "ts-node ./src/server.ts",
+    "docs": "apidoc -i ./ -o ./src/config/apidoc/"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rabeafm/epicure.git"
+  },
+  "author": "rabeafm",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/rabeafm/epicure/issues"
+  },
+  "homepage": "https://github.com/rabeafm/epicure#readme"
+}
